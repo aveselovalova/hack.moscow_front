@@ -5,7 +5,7 @@ import VueCamera from './VueCamera.vue'
 Vue.component('camera', VueCamera);
 
 new Vue({
-  el: '#app',
+	el: '#app',
 	template: '<App/>',
 	components: {
 		App

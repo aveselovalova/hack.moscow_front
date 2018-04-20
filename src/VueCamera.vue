@@ -1,5 +1,5 @@
 <template>
-  <video autoplay></video>
+	<video autoplay></video>
 </template>
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
