@@ -13,17 +13,21 @@
 
 <script>
 	export default {
+		data() {
+			return {
+				test: recognition.lang
+			}
+		},
 		methods: {
 			startButton: function() {
 				final_transcript = '';
-				recognition.lang = ['ru-RU'];
 				recognition.start();
 				final_span.innerHTML = '';
 				interim_span.innerHTML = '';
 			},
 			stopButton: function() {
 				recognition.stop();
-			}
+			},
 		}
 	}
 
