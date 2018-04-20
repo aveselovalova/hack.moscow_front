@@ -3,16 +3,19 @@
 		<img src="./assets/logo.png">
 		<camera></camera>
 		<h1>{{ msg }}</h1>
+		<mic></mic>
 	</div>
 </template>
 
 <script>
 import VueCamera from './VueCamera.vue'
+import Mic from './Mic.vue'
 
 export default {
 	name: 'app',
 	components: {
-			VueCamera
+		VueCamera,
+		Mic
 	},
 	data () {
 		return {
