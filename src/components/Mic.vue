@@ -68,7 +68,7 @@
 				if (event.results[i].isFinal) {
 					final_transcript = event.results[i][0].transcript;
 				} else {
-					interim_transcript += event.results[i][0].transcript;
+					interim_transcript = event.results[i][0].transcript;
 				}
 			}
 			final_span.innerHTML = final_transcript;

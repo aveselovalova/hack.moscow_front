@@ -21,7 +21,8 @@ export default {
 		EventBus.$on('get_image', object => {
 			//console.log(this)
 			//document.getElementById('btn').click();
-			this.drawImage(object.data)
+				this.drawImage(object.data)
+			//}, 2000);
 		})	
 
 		navigator.mediaDevices.enumerateDevices().then( devices =>
@@ -80,12 +81,22 @@ export default {
 	},
 	methods: {
 		drawImage: function(src) {
-			let ctx = this.$refs.images_canvas.getContext('2d');
+			let canvas = this.$refs.images_canvas;
+			let ctx = canvas.getContext('2d');
 			let image = new Image();
 			image.onload = function() {
-		        ctx.drawImage(image, 0, 0);
+	        	ctx.drawImage(image, 0, 0);
 	      	};
 			image.src = src;
+
+			let time = 3000;
+			setTimeout(function(){
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}, 3000);
+		},
+		clearCanvas: function(canvas, ctx, time) {
+			console.log('clear')
+			
 		}
 	}
 
