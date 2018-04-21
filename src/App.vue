@@ -8,15 +8,9 @@
 </template>
 
 <script>
-import VueCamera from './VueCamera.vue'
-import Mic from './Mic.vue'
 
 export default {
 	name: 'app',
-	components: {
-		VueCamera,
-		Mic
-	},
 	data () {
 		return {
 			msg: 'Welcome to Your Vue.js App'
