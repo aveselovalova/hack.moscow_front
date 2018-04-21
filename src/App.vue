@@ -1,20 +1,25 @@
 <template>
 	<div id="app">
-		<img src="./assets/logo.png">
-		<camera ref="camera"></camera>
-		<h1>{{ msg }}</h1>
-		<mic></mic>
+		<parallax>
+			<div class="logo">
+				<p class="magigan-text">Magigan</p>
+			</div>
+		</parallax>
+			<camera ref="camera"></camera>
+			<mic></mic>
 	</div>
 </template>
 
 <script>
 import SocketListener from './components/SocketListener.vue'
 import VueSocketio from 'vue-socket.io';
+import Parallax from 'vue-parallaxy'
 
 export default {
 	name: 'app',
 	components: {
-    SocketListener
+		SocketListener,
+		Parallax
 	},
 	data () {
 		return {
@@ -25,13 +30,19 @@ export default {
 </script>
 
 <style>
+.magigan-text {
+	font-family: 'Stylish';
+	margin: 0;
+	font-size: 120px;
+	color: #000;
+}
+
 #app {
 	font-family: 'Avenir', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	color: #2c3e50;
-	margin-top: 60px;
+	margin: 0;
 }
 
 h1, h2 {

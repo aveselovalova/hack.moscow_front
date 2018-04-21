@@ -1,9 +1,4 @@
 <template>
-	<div>
-		<p v-if="isConnected">We're connected to the server!</p>
-		<p>Message from server: "{{socketMessage}}"</p>
-		<button @click="sendRequestToServer">SendData</button>
-	</div>
 </template>
 
 <script>
@@ -19,8 +14,9 @@ export default {
 
 	mounted() {
 		EventBus.$on('send_query', queryString => {
-			console.log(queryString)
-			//this.sendRequestToServer(gueryString);
+      if(queryString && queryString !== 'null' && queryString !== 'undefined') {
+          this.sendRequestToServer(queryString);
+      }
 		})	
 	},
 	

@@ -1,14 +1,11 @@
 <template>
 	<div>
-		<div class="buttons">
-			<button id="start_button" @click="startButton">Start</button>
-			<button id="stop_button" @click="stopButton">Stop</button>
-		</div>
-		<div id="results">
+		<div class="result-text">
 			<span id="final_span" class="final"></span>
 			<span id="interim_span" class="interim"></span>
 		</div>
-	    <socketListener></socketListener>
+		<magicBtn></magicBtn>
+		<socketListener></socketListener>
 	</div>
 </template>
 
@@ -18,31 +15,40 @@ import { EventBus } from './../event_bus.js'
 	export default {
 		data() {
 			return {
-				test: recognition.lang,
 				query: '',
 				interval: ''
 			}
 		},
+		mounted() {
+			EventBus.$on('start', state => {
+				if(state) {
+					this.startButton();
+				} else {
+					this.stopButton();
+				}
+			});
+		},
 		methods: {
+			sendQuery: function() {
+				var currentText = ""
+				currentText = interim_span.innerHTML
+				if(currentText && currentText !== 'null' && currentText !== 'undefined') {
+					EventBus.$emit('send_query', currentText)
+				}
+			},
+			runWithTimer: function() {
+				this.interval = setInterval(this.sendQuery, 700)
+			},
 			startButton: function() {
 				final_transcript = '';
 				recognition.start();
 				final_span.innerHTML = '';
 				interim_span.innerHTML = '';
-				this.timer();
+				this.runWithTimer();
 			},
 			stopButton: function() {
 				recognition.stop();
 				clearInterval(this.interval);
-			},
-			func: function() {
-				if(interim_span.innerHTML !== this.query) {
-					EventBus.$emit('send_query', this.query)
-					this.query
-				}
-			},
-			timer: function() {
-				this.interval = setInterval(this.func, 1000)
 			}
 		}
 	}
@@ -50,6 +56,7 @@ import { EventBus } from './../event_bus.js'
 	var final_transcript = '';
 	if ('webkitSpeechRecognition' in window) {
 		var recognition = new webkitSpeechRecognition();
+		recognition.lang = 'ru-RU';
 		recognition.continuous = true;
 		recognition.interimResults = true;
 
@@ -79,3 +86,9 @@ import { EventBus } from './../event_bus.js'
 		};
 	}
 </script>
+
+<style lang="css">
+	.result-text {
+		height: 30px;
+	}
+</style>
