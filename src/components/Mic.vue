@@ -8,11 +8,13 @@
 			<span id="final_span" class="final"></span>
 			<span id="interim_span" class="interim"></span>
 		</div>
-	    <socketListener :Query="query"></socketListener>
+	    <socketListener></socketListener>
 	</div>
 </template>
 
 <script>
+import { EventBus } from './../event_bus.js'
+
 	export default {
 		data() {
 			return {
@@ -34,9 +36,10 @@
 				clearInterval(this.interval);
 			},
 			func: function() {
-				this.query = interim_span.innerHTML; 
-				console.log(this.query)
-				//console.log(final_span.innerHTML);
+				if(interim_span.innerHTML !== this.query) {
+					EventBus.$emit('send_query', this.query)
+					this.query
+				}
 			},
 			timer: function() {
 				this.interval = setInterval(this.func, 1000)

@@ -1,76 +1,49 @@
 <template>
-  <div>
-    <p v-if="isConnected">We're connected to the server!</p>
-    <p>Message from server: "{{socketMessage}}"</p>
-    <button @click="sendRequestToServer">SendData</button>
-  </div>
+	<div>
+		<p v-if="isConnected">We're connected to the server!</p>
+		<p>Message from server: "{{socketMessage}}"</p>
+		<button @click="sendRequestToServer">SendData</button>
+	</div>
 </template>
 
 <script>
 import { EventBus } from './../event_bus.js'
 
 export default {
-  data() {
-    return {
-      isConnected: false,
-      socketMessage: '',
-      interval: ''
-    }
-  },
+	data() {
+		return {
+			isConnected: false,
+			socketMessage: '',
+		}
+	},
 
-  props: {
-    Query: {
-       type: String,
-    }
-  },
+	mounted() {
+		EventBus.$on('send_query', queryString => {
+			console.log(queryString)
+			//this.sendRequestToServer(gueryString);
+		})	
+	},
+	
+	sockets: {
+		connect() {
+			this.isConnected = true;
+		},
 
- // computed: {
- //    // геттер вычисляемого значения
- //    ttt: {
- //      get: function () {
- //        return this.Test
- //      },
- //      // сеттер:
- //      set: function (val) {
- //        this.Test = val
- //        console.log(val)
- //      }
- //    }
- //  },
-  mounted() {
-   // this.timer();
-  },
-  
-  sockets: {
-    connect() {
-      // Fired when the socket connects.
-      this.isConnected = true;
-    },
+		disconnect() {
+			this.isConnected = false;
+		},
+		imageResponse(data) {
+			this.socketMessage = data
+			if(data != '') {
+				EventBus.$emit('get_image', data)
+			}
+		}
+	},
 
-    disconnect() {
-      this.isConnected = false;
-    },
-
-    // Fired when the server sends something on the "messageChannel" channel.
-    imageResponse(data) {
-      this.socketMessage = data
-      console.log(data)
-      //VueCamera.$emit('smth', {item:this.socketMessage})
-      EventBus.$emit('get_image', data)
-    }
-  },
-
-  methods: {
-    sendRequestToServer(text) {
-      console.log('TEST - ', this.Query)
-      EventBus.$emit('get_image', "kek")
-      console.log("I send query")
-    // if (this.Query != '') {
-       this.$socket.emit('getImage', this.Query)
-    },
-    timer: function() {
-      this.interval = setInterval(this.func, 1000)
-    }
-  }
+	methods: {
+		sendRequestToServer(text) {
+			this.$socket.emit('getImage', text)
+		},
+	}
 }
 </script>
