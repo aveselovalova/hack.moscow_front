@@ -2,15 +2,21 @@
 	<div id="app">
 		<img src="./assets/logo.png">
 		<camera></camera>
+    <socketListener></socketListener>
 		<h1>{{ msg }}</h1>
 		<mic></mic>
 	</div>
 </template>
 
 <script>
+import SocketListener from './SocketListener.vue'
+import VueSocketio from 'vue-socket.io';
 
 export default {
 	name: 'app',
+	components: {
+    SocketListener
+	},
 	data () {
 		return {
 			msg: 'Welcome to Your Vue.js App'
