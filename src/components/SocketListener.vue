@@ -7,13 +7,9 @@
 </template>
 
 <script>
-import VueCamera from './components/VueCamera.vue'
-import { EventBus } from './event_bus.js'
+import { EventBus } from './../event_bus.js'
 
 export default {
-  components: {
-    VueCamera    
-  },
   data() {
     return {
       isConnected: false,
@@ -58,26 +54,19 @@ export default {
     // Fired when the server sends something on the "messageChannel" channel.
     imageResponse(data) {
       this.socketMessage = data
+      console.log(data)
       //VueCamera.$emit('smth', {item:this.socketMessage})
       EventBus.$emit('get_image', data)
-      VueCamera.drawImage(data)
     }
   },
 
   methods: {
     sendRequestToServer(text) {
       console.log('TEST - ', this.Query)
-      console.log(VueCamera.$refs)
-
+      EventBus.$emit('get_image', "kek")
+      console.log("I send query")
     // if (this.Query != '') {
        this.$socket.emit('getImage', 'корги')
-    },
-    func: function() {
-        
-      console.log('TEST - ', this.Query)
-     if (this.Query != '') {
-       this.$socket.emit('getImage', this.Query)
-      }
     },
     timer: function() {
       this.interval = setInterval(this.func, 1000)

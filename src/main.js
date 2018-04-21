@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import SocketListener from './SocketListener.vue'
+import SocketListener from './components/SocketListener.vue'
 import VueCamera from './components/VueCamera.vue'
 import Mic from './components/Mic.vue'
 
@@ -14,9 +14,6 @@ Vue.component('socketListener', SocketListener)
 export const SocketInstance = socketio('http://localhost:5000');
 
 Vue.use(VueSocketIO, SocketInstance)
-const vmA = new Vue({
-  data: 'wwww'
-})
 
 new Vue({
     el: '#app',

@@ -7,15 +7,15 @@
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script>
-import { EventBus } from './event_bus.js'
+import { EventBus } from './../event_bus.js'
 
 EventBus.$on('get_image', data => {
-	console.log("ITS FUCKING WORK!!!!!")
+	console.log(data)
 })
+
 export default {
 	data() {
 		return {
-			src: vmA
 		}
 	},
 	mounted()

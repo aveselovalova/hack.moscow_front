@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SocketListener from './SocketListener.vue'
+import SocketListener from './components/SocketListener.vue'
 import VueSocketio from 'vue-socket.io';
 
 export default {
