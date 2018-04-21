@@ -9,9 +9,7 @@
 <script>
 import { EventBus } from './../event_bus.js'
 
-EventBus.$on('get_image', data => {
-	console.log(data)
-})
+
 
 export default {
 	data() {
@@ -20,6 +18,12 @@ export default {
 	},
 	mounted()
 	{		
+		EventBus.$on('get_image', object => {
+			//console.log(this)
+			//document.getElementById('btn').click();
+			this.drawImage(object.data)
+		})	
+
 		navigator.mediaDevices.enumerateDevices().then( devices =>
 		{
 			devices= devices.filter( v => (v.kind=="videoinput"));
@@ -72,15 +76,16 @@ export default {
 			console.log(err.name + ": " + err.message);
 		});
 		console.log(this.src)
-		this.drawImage('https://images.wagwalkingweb.com/media/breed/pembroke-welsh-corgi/appearance/pembroke-welsh-corgi.png?auto=compress&fit=max')
+		this.drawImage('http://centr-sobak.ru/image/data/porodi/velsh-korgi.png')
 	},
 	methods: {
 		drawImage: function(src) {
 			let ctx = this.$refs.images_canvas.getContext('2d');
 			let image = new Image();
+			image.onload = function() {
+		        ctx.drawImage(image, 0, 0);
+	      	};
 			image.src = src;
-			console.log(image)
-			ctx.drawImage(image,0,0);
 		}
 	}
 

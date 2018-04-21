@@ -66,7 +66,7 @@ export default {
       EventBus.$emit('get_image', "kek")
       console.log("I send query")
     // if (this.Query != '') {
-       this.$socket.emit('getImage', 'корги')
+       this.$socket.emit('getImage', this.Query)
     },
     timer: function() {
       this.interval = setInterval(this.func, 1000)
