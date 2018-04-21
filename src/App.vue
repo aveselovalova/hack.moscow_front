@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<img src="./assets/logo.png">
-		<camera></camera>
+		<camera ref="camera"></camera>
 		<h1>{{ msg }}</h1>
 		<mic></mic>
 	</div>

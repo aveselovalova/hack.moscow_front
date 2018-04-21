@@ -8,6 +8,7 @@
 
 <script>
 import VueCamera from './components/VueCamera.vue'
+import { EventBus } from './event_bus.js'
 
 export default {
   components: {
@@ -58,13 +59,16 @@ export default {
     imageResponse(data) {
       this.socketMessage = data
       //VueCamera.$emit('smth', {item:this.socketMessage})
-      console.log(data)
+      EventBus.$emit('get_image', data)
+      VueCamera.drawImage(data)
     }
   },
 
   methods: {
     sendRequestToServer(text) {
       console.log('TEST - ', this.Query)
+      console.log(VueCamera.$refs)
+
     // if (this.Query != '') {
        this.$socket.emit('getImage', 'корги')
     },

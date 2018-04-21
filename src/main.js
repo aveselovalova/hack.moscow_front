@@ -14,6 +14,9 @@ Vue.component('socketListener', SocketListener)
 export const SocketInstance = socketio('http://localhost:5000');
 
 Vue.use(VueSocketIO, SocketInstance)
+const vmA = new Vue({
+  data: 'wwww'
+})
 
 new Vue({
     el: '#app',

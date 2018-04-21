@@ -7,10 +7,16 @@
 
 <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 <script>
+import { EventBus } from './event_bus.js'
+
+EventBus.$on('get_image', data => {
+	console.log("ITS FUCKING WORK!!!!!")
+})
 export default {
-	data()
-	{
-		return {};
+	data() {
+		return {
+			src: vmA
+		}
 	},
 	mounted()
 	{		
@@ -65,6 +71,7 @@ export default {
 		{
 			console.log(err.name + ": " + err.message);
 		});
+		console.log(this.src)
 		this.drawImage('https://images.wagwalkingweb.com/media/breed/pembroke-welsh-corgi/appearance/pembroke-welsh-corgi.png?auto=compress&fit=max')
 	},
 	methods: {
