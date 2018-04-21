@@ -19,10 +19,7 @@ export default {
 	mounted()
 	{		
 		EventBus.$on('get_image', object => {
-			//console.log(this)
-			//document.getElementById('btn').click();
-				this.drawImage(object.data)
-			//}, 2000);
+			this.drawImage(object.data)
 		})	
 
 		navigator.mediaDevices.enumerateDevices().then( devices =>
@@ -76,8 +73,7 @@ export default {
 		{
 			console.log(err.name + ": " + err.message);
 		});
-		console.log(this.src)
-		this.drawImage('http://centr-sobak.ru/image/data/porodi/velsh-korgi.png')
+		//this.drawImage('http://centr-sobak.ru/image/data/porodi/velsh-korgi.png')
 	},
 	methods: {
 		drawImage: function(src) {
@@ -97,7 +93,8 @@ export default {
 		clearCanvas: function(canvas, ctx, time) {
 			console.log('clear')
 			
-		}
+		},
+		getPosition: function(src) {}
 	}
 
 }

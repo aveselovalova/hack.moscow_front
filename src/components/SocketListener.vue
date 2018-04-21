@@ -19,8 +19,9 @@ export default {
 
 	mounted() {
 		EventBus.$on('send_query', queryString => {
-			console.log(queryString)
-			//this.sendRequestToServer(gueryString);
+      if(queryString && queryString !== 'null' && queryString !== 'undefined') {
+          this.sendRequestToServer(queryString);
+      }
 		})	
 	},
 	

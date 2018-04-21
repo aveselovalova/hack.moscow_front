@@ -18,31 +18,31 @@ import { EventBus } from './../event_bus.js'
 	export default {
 		data() {
 			return {
-				test: recognition.lang,
 				query: '',
 				interval: ''
 			}
 		},
 		methods: {
+			func: function() {
+					var currentText = ""
+					currentText = interim_span.innerHTML
+					if(currentText && currentText !== 'null' && currentText !== 'undefined') {
+						EventBus.$emit('send_query', currentText)
+					}
+			},
+			runWithTimer: function() {
+				this.interval = setInterval(this.func, 700)
+			},
 			startButton: function() {
 				final_transcript = '';
 				recognition.start();
 				final_span.innerHTML = '';
 				interim_span.innerHTML = '';
-				this.timer();
+				this.runWithTimer();
 			},
 			stopButton: function() {
 				recognition.stop();
 				clearInterval(this.interval);
-			},
-			func: function() {
-				if(interim_span.innerHTML !== this.query) {
-					EventBus.$emit('send_query', this.query)
-					this.query
-				}
-			},
-			timer: function() {
-				this.interval = setInterval(this.func, 1000)
 			}
 		}
 	}
@@ -50,6 +50,7 @@ import { EventBus } from './../event_bus.js'
 	var final_transcript = '';
 	if ('webkitSpeechRecognition' in window) {
 		var recognition = new webkitSpeechRecognition();
+		recognition.lang = 'ru-RU';
 		recognition.continuous = true;
 		recognition.interimResults = true;
 
