@@ -72,6 +72,7 @@ export default {
 			let ctx = this.$refs.images_canvas.getContext('2d');
 			let image = new Image();
 			image.src = src;
+			console.log(image)
 			ctx.drawImage(image,0,0);
 		}
 	}

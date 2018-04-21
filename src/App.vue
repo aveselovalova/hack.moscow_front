@@ -2,7 +2,6 @@
 	<div id="app">
 		<img src="./assets/logo.png">
 		<camera></camera>
-    <socketListener></socketListener>
 		<h1>{{ msg }}</h1>
 		<mic></mic>
 	</div>

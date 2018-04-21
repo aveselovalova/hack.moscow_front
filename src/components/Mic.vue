@@ -8,6 +8,7 @@
 			<span id="final_span" class="final"></span>
 			<span id="interim_span" class="interim"></span>
 		</div>
+	    <socketListener :Query="query"></socketListener>
 	</div>
 </template>
 
@@ -15,7 +16,9 @@
 	export default {
 		data() {
 			return {
-				test: recognition.lang
+				test: recognition.lang,
+				query: '',
+				interval: ''
 			}
 		},
 		methods: {
@@ -24,10 +27,20 @@
 				recognition.start();
 				final_span.innerHTML = '';
 				interim_span.innerHTML = '';
+				this.timer();
 			},
 			stopButton: function() {
 				recognition.stop();
+				clearInterval(this.interval);
 			},
+			func: function() {
+				this.query = interim_span.innerHTML; 
+				console.log(this.query)
+				//console.log(final_span.innerHTML);
+			},
+			timer: function() {
+				this.interval = setInterval(this.func, 1000)
+			}
 		}
 	}
 
@@ -53,7 +66,7 @@
 			var interim_transcript = '';
 			for (var i = event.resultIndex; i < event.results.length; ++i) {
 				if (event.results[i].isFinal) {
-					final_transcript += event.results[i][0].transcript;
+					final_transcript = event.results[i][0].transcript;
 				} else {
 					interim_transcript += event.results[i][0].transcript;
 				}
