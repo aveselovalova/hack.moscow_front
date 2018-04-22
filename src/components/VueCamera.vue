@@ -1,7 +1,12 @@
 <template>
 	<div class="b-content__wrapper">
 		<video ref="video" autoplay></video>
-		<canvas class="b-content__canvas" ref="images_canvas" width="1280" height="500"><img ref="magicImage" src=""></canvas>
+		<canvas class="b-content__canvas" ref="images_canvas" width="1280" height="720">
+			<img ref="magicImage1" src="">
+			<img ref="magicImage2" src="">
+			<img ref="magicImage3" src="">
+			<img ref="magicImage4" src="">
+		</canvas>
 	</div>
 </template>
 
@@ -9,9 +14,17 @@
 <script>
 import { EventBus } from './../event_bus.js'
 
+function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+
+    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+
+    return { width: srcWidth*ratio, height: srcHeight*ratio };
+ }
+
 export default {
 	data() {
 		return {
+			nowWillUpdateThisImage: 1
 		}
 	},
 	mounted()
@@ -74,23 +87,46 @@ export default {
 	},
 	methods: {
 		drawImage: function(src) {
+			let videoWidth = 1280
+			let videoHeight = 720
+			let blockHeight = 350
+			let blockWidth = 350
+			//let blockHeight = videoHeight * 0.5
+			//let blockWidth = videoWidth * 0.4
+
+			let currentBlockStartX = 0
+			let currentBlockStartY = 0
+
 			let canvas = this.$refs.images_canvas;
 			let ctx = canvas.getContext('2d');
-			let image = this.$refs.magicImage;
+			let image = null
+			switch (this.nowWillUpdateThisImage) {
+				case 1:
+					image = this.$refs.magicImage1;
+					currentBlockStartX = 0
+					currentBlockStartY = 0
+					this.nowWillUpdateThisImage = 2;
+					break;
+				case 2:
+					image = this.$refs.magicImage2;
+					currentBlockStartX = videoWidth - blockWidth
+					currentBlockStartY = 0
+					this.nowWillUpdateThisImage = 1;
+					break;
+			}
 			image.onload = function() {
-				let timeout = (image.src != '') ? 500 : 0;
-				setTimeout(function(){
-					ctx.clearRect(0, 0, canvas.width, canvas.height);
-					ctx.drawImage(image, 0, 0);
-				}, timeout);
+				let imageHeight = this.height
+				let imageWidth = this.width
+				let widthAndHeight = calculateAspectRatioFit(imageWidth, imageHeight, blockWidth, blockHeight)
+	            
+				ctx.clearRect(currentBlockStartX, currentBlockStartY, videoWidth*0.7, videoHeight*0.7);
+				ctx.drawImage(image, currentBlockStartX, currentBlockStartY, widthAndHeight.width, widthAndHeight.height);
 			};
 			image.src = src;
 		},
 		clearCanvas: function(canvas, ctx, time) {
-			console.log('clear')
-			
-		},
-		getPosition: function(src) {}
+			console.log('clear')	
+		}
 	}
 
 }
