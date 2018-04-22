@@ -33,7 +33,11 @@ import { EventBus } from './../event_bus.js'
 				var currentText = ""
 				currentText = interim_span.innerHTML
 				if(currentText && currentText !== 'null' && currentText !== 'undefined') {
-					EventBus.$emit('send_query', currentText)
+					let method = 'send_query';
+					if(currentText.includes('дождь')) {
+						method = 'show_rain'
+					}
+					EventBus.$emit(method, currentText)
 				}
 			},
 			runWithTimer: function() {

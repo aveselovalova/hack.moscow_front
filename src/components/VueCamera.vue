@@ -1,7 +1,7 @@
 <template>
 	<div class="b-content__wrapper">
 		<video class='camera' ref="video" autoplay></video>
-		<canvas class="b-content__canvas" ref="images_canvas" width="1100" height="620">
+		<canvas class="b-content__canvas" id="canvas" ref="images_canvas" width="1100" height="620">
 			<img ref="magicImage1" src="">
 			<img ref="magicImage2" src="">
 			<img ref="magicImage3" src="">
@@ -16,9 +16,9 @@ import { EventBus } from './../event_bus.js'
 
 function calculateAspectRatioFit(srcWidth, srcHeight, maxWidth, maxHeight) {
 
-    var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+	var ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
 
-    return { width: srcWidth*ratio, height: srcHeight*ratio };
+	return { width: srcWidth*ratio, height: srcHeight*ratio };
  }
 
 export default {
@@ -31,7 +31,10 @@ export default {
 	{		
 		EventBus.$on('get_image', object => {
 			this.drawImage(object.data)
-		})	
+		});
+		EventBus.$on('show_rain', object => {
+			this.showRain()
+		});
 
 		navigator.mediaDevices.enumerateDevices().then( devices =>
 		{
@@ -120,12 +123,12 @@ export default {
 				let imageHeight = this.height
 				let imageWidth = this.width
 				let widthAndHeight = calculateAspectRatioFit(imageWidth, imageHeight, blockWidth, blockHeight)
-	            if(toRight) {
-	            	currentBlockStartX = videoWidth - widthAndHeight.width;
-	            }
-	            if(currentBlockStartX > 750) {
-	            	currentBlockStartX = 750;
-	            }
+				if(toRight) {
+					currentBlockStartX = videoWidth - widthAndHeight.width;
+				}
+				if(currentBlockStartX > 750) {
+					currentBlockStartX = 750;
+				}
 				ctx.clearRect(currentBlockStartX, currentBlockStartY, videoWidth*0.7, videoHeight*0.7);
 				ctx.drawImage(image, currentBlockStartX, currentBlockStartY, widthAndHeight.width, widthAndHeight.height);
 			};
@@ -133,6 +136,69 @@ export default {
 		},
 		clearCanvas: function(canvas, ctx, time) {
 			console.log('clear')	
+		},
+		showRain: function() {
+			var canvas = $('#canvas')[0];
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+
+			if(canvas.getContext) {
+				var ctx = canvas.getContext('2d');
+				var w = canvas.width;
+				var h = canvas.height;
+				ctx.strokeStyle = 'rgba(174,194,224,0.7)';
+				ctx.lineWidth = 1;
+				ctx.lineCap = 'round';
+				
+				
+				var init = [];
+				var maxParts = 1000;
+				for(var a = 0; a < maxParts; a++) {
+					init.push({
+						x: Math.random() * w,
+						y: Math.random() * h,
+						l: Math.random() * 1,
+						xs: -4 + Math.random() * 4 + 2,
+						ys: Math.random() * 10 + 10
+					})
+				}
+				
+				var particles = [];
+				for(var b = 0; b < maxParts; b++) {
+					particles[b] = init[b];
+				}
+				
+				function draw() {
+					ctx.clearRect(0, 0, w, h);
+					for(var c = 0; c < particles.length; c++) {
+						var p = particles[c];
+						ctx.beginPath();
+						ctx.moveTo(p.x, p.y);
+						ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys);
+						ctx.stroke();
+					}
+					move();
+				}
+				
+				function move() {
+					for(var b = 0; b < particles.length; b++) {
+						var p = particles[b];
+						p.x += p.xs;
+						p.y += p.ys;
+						if(p.x > w || p.y > h) {
+							p.x = Math.random() * w;
+							p.y = -20;
+						}
+					}
+				}
+				let rainInterval = setInterval(draw, 30);
+				setTimeout(function() {
+					clearInterval(rainInterval);
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					canvas.width = 1100;
+					canvas.height = 620;
+				},2000);	
+			}
 		}
 	}
 
