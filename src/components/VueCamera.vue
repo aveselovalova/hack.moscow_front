@@ -100,6 +100,7 @@ export default {
 			let canvas = this.$refs.images_canvas;
 			let ctx = canvas.getContext('2d');
 			let image = null
+			let toRight = false
 			switch (this.nowWillUpdateThisImage) {
 				case 1:
 					image = this.$refs.magicImage1;
@@ -108,6 +109,7 @@ export default {
 					this.nowWillUpdateThisImage = 2;
 					break;
 				case 2:
+					toRight = true
 					image = this.$refs.magicImage2;
 					currentBlockStartX = videoWidth - blockWidth
 					currentBlockStartY = 0
@@ -118,7 +120,9 @@ export default {
 				let imageHeight = this.height
 				let imageWidth = this.width
 				let widthAndHeight = calculateAspectRatioFit(imageWidth, imageHeight, blockWidth, blockHeight)
-	            
+	            if(toRight) {
+	            	currentBlockStartX = videoWidth - widthAndHeight.width;
+	            }
 				ctx.clearRect(currentBlockStartX, currentBlockStartY, videoWidth*0.7, videoHeight*0.7);
 				ctx.drawImage(image, currentBlockStartX, currentBlockStartY, widthAndHeight.width, widthAndHeight.height);
 			};
