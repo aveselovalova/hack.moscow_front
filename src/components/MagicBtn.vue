@@ -31,7 +31,9 @@ import { EventBus } from './../event_bus.js'
 
 export default {
 	data() {
-		state: 0
+		return {
+			state: 0
+		}
 	},
 	methods: {
 		voiceRecord: function() {

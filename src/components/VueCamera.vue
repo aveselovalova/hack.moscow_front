@@ -1,7 +1,7 @@
 <template>
 	<div class="b-content__wrapper">
 		<video ref="video" autoplay></video>
-		<canvas class="b-content__canvas" ref="images_canvas" width="1280" height="500"></canvas>
+		<canvas class="b-content__canvas" ref="images_canvas" width="1280" height="500"><img ref="magicImage" src=""></canvas>
 	</div>
 </template>
 
@@ -76,16 +76,15 @@ export default {
 		drawImage: function(src) {
 			let canvas = this.$refs.images_canvas;
 			let ctx = canvas.getContext('2d');
-			let image = new Image();
+			let image = this.$refs.magicImage;
 			image.onload = function() {
-	        	ctx.drawImage(image, 0, 0);
-	      	};
+				let timeout = (image.src != '') ? 500 : 0;
+				setTimeout(function(){
+					ctx.clearRect(0, 0, canvas.width, canvas.height);
+					ctx.drawImage(image, 0, 0);
+				}, timeout);
+			};
 			image.src = src;
-
-			let time = 3000;
-			setTimeout(function(){
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
-			}, 3000);
 		},
 		clearCanvas: function(canvas, ctx, time) {
 			console.log('clear')
@@ -107,5 +106,8 @@ export default {
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+	.magic-image {
+		border: 1px solid red;
 	}
 </style>

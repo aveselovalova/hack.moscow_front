@@ -29,6 +29,7 @@ export default {
 			this.isConnected = false;
 		},
 		imageResponse(data) {
+			console.log('!!!!!', data)
 			this.socketMessage = data
 			if(data != '') {
 				EventBus.$emit('get_image', data)
