@@ -1,7 +1,7 @@
 <template>
 	<div class="b-content__wrapper">
-		<video ref="video" autoplay></video>
-		<canvas class="b-content__canvas" ref="images_canvas" width="1280" height="720">
+		<video class='camera' ref="video" autoplay></video>
+		<canvas class="b-content__canvas" ref="images_canvas" width="1100" height="620">
 			<img ref="magicImage1" src="">
 			<img ref="magicImage2" src="">
 			<img ref="magicImage3" src="">
@@ -87,8 +87,8 @@ export default {
 	},
 	methods: {
 		drawImage: function(src) {
-			let videoWidth = 1280
-			let videoHeight = 720
+			let videoWidth = 1100
+			let videoHeight = 620
 			let blockHeight = 350
 			let blockWidth = 350
 			//let blockHeight = videoHeight * 0.5
@@ -123,6 +123,9 @@ export default {
 	            if(toRight) {
 	            	currentBlockStartX = videoWidth - widthAndHeight.width;
 	            }
+	            if(currentBlockStartX > 750) {
+	            	currentBlockStartX = 750;
+	            }
 				ctx.clearRect(currentBlockStartX, currentBlockStartY, videoWidth*0.7, videoHeight*0.7);
 				ctx.drawImage(image, currentBlockStartX, currentBlockStartY, widthAndHeight.width, widthAndHeight.height);
 			};
@@ -138,7 +141,7 @@ export default {
 
 <style lang="css">
 	.b-content__wrapper {
-		width: 1280px;
+		width: 1100px;
 		margin: 0 auto;
 		position: relative;
 	}
@@ -149,5 +152,8 @@ export default {
 	}
 	.magic-image {
 		border: 1px solid red;
+	}
+	.camera {
+		height: 620px
 	}
 </style>

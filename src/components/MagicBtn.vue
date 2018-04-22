@@ -1,7 +1,7 @@
 <template>
 	<div id="pagewrap">
 		<svg version="1.1" @click="voiceRecord" ref="magicwand" id="magicwand" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-			 width="200px" height="200px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+			 width="150px" height="150px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
 
 		<ellipse id="circle" class="circle" cx="49" cy="47" rx="38.488" ry="40.279"/>
 
