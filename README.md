@@ -1,6 +1,9 @@
-# vue-webpack-simple
+# Magigan ✨
 
-> A Vue.js project
+A Vue.js project real-time visualizes your speech, making the video more informative and reducing your time for processing it.
+
+[Hackathon Winner](https://devpost.com/software/magigan)
+
 
 ## Build Setup
 
@@ -14,5 +17,3 @@ npm run dev
 # build for production with minification
 npm run build
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
